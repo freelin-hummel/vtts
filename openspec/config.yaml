@@ -1,0 +1,22 @@
+schema: spec-driven
+
+context: |
+  Project: web-based 3D VTT built from Tabletop Simulator-derived assets.
+  Rendering: Three.js is required. React Three Fiber is the preferred React integration layer.
+  Visual direction: low-fidelity RuneScape / PSX / N64 style over photorealism.
+  Product priorities: fast movement, minimal UI chrome, modular content, in-editor scripting, and editable package-based content.
+  Asset constraint: Unity .unity3d bundles should be normalized offline before browser consumption.
+
+rules:
+  proposal:
+    - Keep scope focused on the first implementation slice, not the full product vision.
+    - Call out where the repo is still greenfield.
+  specs:
+    - Keep requirements behavior-first and verifiable.
+    - Use Given/When/Then style scenarios with explicit user-visible outcomes.
+  design:
+    - Be concrete about package boundaries and chosen libraries.
+    - Keep implementation detail out of specs and in design instead.
+  tasks:
+    - Group tasks into a sequence that can bootstrap the repo from zero.
+    - Keep tasks small enough to execute in a single focused session when possible.
