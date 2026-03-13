@@ -4,6 +4,78 @@
 
 The repo is greenfield apart from the imported asset corpus in `Mods/` and a narrative product brief in `docs/3d-vtt-spec.md`. The first design decision is not about polishing implementation details; it is about choosing a stack and repository shape that support fast movement, retro rendering, modular content, and in-editor scripting without painting the project into a corner.
 
+## Pre-Implementation Definitions
+
+The following choices are defined before implementation starts so the backend, importer, and frontend share stable contracts.
+
+### First import source and startup behavior
+
+- The first importer will read the existing `Mods/` corpus directly when the backend server starts.
+- Startup behavior should import all configured mod sources and reindex newly discovered assets.
+- The first imported package granularity should match the mods themselves rather than treating individual files as separate packages.
+- Reimport behavior in MVP should watch configured source folders and auto-reimport changed content.
+
+This means the first implementation does not depend on browser uploads to prove the system. The backend can bootstrap usable content directly from the current repository layout.
+
+### Backend runtime shape
+
+- MVP backend should start as a single Node.js service with an in-process worker.
+- The single service should still preserve clear internal boundaries between API, import orchestration, storage, indexing, and realtime session concerns.
+- Deployment simplicity is more important than process separation in the first slice.
+
+This keeps the first iteration easy to run locally while preserving a path to split the worker or gateway later.
+
+### Workspace and persistence baseline
+
+- Use `pnpm` workspaces for the monorepo baseline.
+- Use SQLite for package metadata, scene data, import jobs, warnings, and provenance in MVP.
+- Use an object-storage abstraction from day one, with local disk as the first concrete implementation.
+
+This gives the project local-first simplicity without coupling asset delivery to ad hoc filesystem assumptions.
+
+### Package and identity model
+
+- Each imported mod becomes a package-equivalent content unit.
+- Assets and prefabs use stable package-scoped IDs plus generated global IDs.
+- Scene entities reference prefab IDs plus local overrides rather than copying full prefab payloads into scenes.
+
+This preserves human-readable content structure while keeping references durable and scenes reusable.
+
+### Scene persistence scope
+
+Saved scene state in MVP should include:
+
+- placed prefab or entity references
+- local transform overrides
+- visibility state
+- script attachments and script parameters
+- GM notes or annotations
+- per-user camera state where needed for restoring session context
+
+### Initial scripting lifecycle
+
+The first scripting lifecycle surface should include:
+
+- `onInit`
+- `onDestroy`
+- `onUpdate`
+- `onInteract`
+- `onEnterTrigger`
+- `onLeaveTrigger`
+
+`onNetworkEvent` can wait until the realtime layer is more mature.
+
+### Explicit first-importer limits
+
+The first importer should explicitly avoid trying to solve the whole TTS space at once. It should skip or defer:
+
+- raw `.unity3d` parsing in the browser
+- automatic support for every TTS source variant
+- perfect metadata recovery for all mods
+- complex material or shader parity with TTS
+
+The goal is a stable normalized content path, not full fidelity to every source edge case.
+
 ## Goals / Non-Goals
 
 **Goals**
@@ -204,6 +276,20 @@ content/packages/<package-name>/
   - visibility and selection broadcasts where needed
   - script-generated scene events
   - GM control events
+
+  ### Initial data contracts to define first
+
+  Before any meaningful code lands, the following schemas must be written and treated as the contract boundary:
+
+  - package manifest
+  - asset record
+  - prefab record
+  - scene manifest
+  - script metadata and script attachment record
+  - import job record
+  - import warning and provenance record
+
+  These schemas should live in `packages/content-schema` and be reused by API handlers, import workers, storage, and the frontend.
 
 ### Decision: Prefer a component registry over a full ECS framework initially
 
