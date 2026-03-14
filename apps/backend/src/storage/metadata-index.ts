@@ -5,7 +5,7 @@ import {
   type AssetRecord,
   type PackageManifest,
   type PrefabRecord,
-} from "@vtts/content-schema";
+} from '@vtts/content-schema';
 
 const getContentKey = (packageId: string, recordId: string): string => `${packageId}:${recordId}`;
 

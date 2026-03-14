@@ -1,12 +1,8 @@
-import {
-  importJobSchema,
-  packageManifestSchema,
-  sceneManifestSchema,
-} from "@vtts/content-schema";
+import { importJobSchema, packageManifestSchema, sceneManifestSchema } from '@vtts/content-schema';
 
-import { apiModule } from "./api/index.js";
-import { importPipelineStages } from "./imports/index.js";
-import { storageModule } from "./storage/index.js";
+import { apiModule } from './api/index.js';
+import { importPipelineStages } from './imports/index.js';
+import { storageModule } from './storage/index.js';
 
 export const backendContracts = {
   importJob: importJobSchema,
@@ -15,8 +11,8 @@ export const backendContracts = {
 } as const;
 
 export const backendApp = {
-  runtime: "node",
-  shape: "single-service",
+  runtime: 'node',
+  shape: 'single-service',
   modules: {
     api: apiModule,
     imports: {

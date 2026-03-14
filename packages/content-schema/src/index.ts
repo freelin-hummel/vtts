@@ -1,13 +1,16 @@
-import { z } from "zod";
+import { z } from 'zod';
 
-const schemaVersionSchema = z.literal("1");
+const schemaVersionSchema = z.literal('1');
 const packageIdSchema = z.string().regex(/^[a-z0-9][a-z0-9-]*$/);
 const localRecordIdSchema = z.string().regex(/^[a-z0-9][a-z0-9._/-]*$/);
 const globalRecordIdSchema = z.string().min(1);
 const isoDateTimeSchema = z.string().datetime({ offset: true });
-const relativePathSchema = z.string().min(1).refine((value) => !value.startsWith("/"), {
-  message: "Expected a relative path",
-});
+const relativePathSchema = z
+  .string()
+  .min(1)
+  .refine((value) => !value.startsWith('/'), {
+    message: 'Expected a relative path',
+  });
 const vector3Schema = z
   .object({
     x: z.number(),
@@ -45,7 +48,7 @@ export const contentRefSchema = z
 
 export const provenanceRecordSchema = z
   .object({
-    sourceKind: z.enum(["tts-mod", "tts-save", "unity-bundle", "loose-file", "manual"]),
+    sourceKind: z.enum(['tts-mod', 'tts-save', 'unity-bundle', 'loose-file', 'manual']),
     sourceUri: z.string().min(1),
     sourcePackageId: z.string().min(1).optional(),
     sourceObjectId: z.string().min(1).optional(),
@@ -58,9 +61,9 @@ export const provenanceRecordSchema = z
 export const importWarningSchema = z
   .object({
     code: z.string().min(1),
-    severity: z.enum(["info", "warning", "error"]),
+    severity: z.enum(['info', 'warning', 'error']),
     message: z.string().min(1),
-    recordType: z.enum(["package", "asset", "prefab", "scene", "script", "import-job"]),
+    recordType: z.enum(['package', 'asset', 'prefab', 'scene', 'script', 'import-job']),
     recordRef: contentRefSchema.optional(),
   })
   .strict();
@@ -68,7 +71,7 @@ export const importWarningSchema = z
 export const scriptParameterSchema = z
   .object({
     name: z.string().min(1),
-    type: z.enum(["string", "number", "boolean", "json", "entity-ref", "asset-ref"]),
+    type: z.enum(['string', 'number', 'boolean', 'json', 'entity-ref', 'asset-ref']),
     required: z.boolean().default(false),
     defaultValue: jsonValueSchema.optional(),
     description: z.string().min(1).optional(),
@@ -84,14 +87,7 @@ export const scriptMetadataSchema = z
     name: z.string().min(1),
     entryPath: relativePathSchema,
     lifecycleHooks: z.array(
-      z.enum([
-        "onInit",
-        "onDestroy",
-        "onUpdate",
-        "onInteract",
-        "onEnterTrigger",
-        "onLeaveTrigger",
-      ]),
+      z.enum(['onInit', 'onDestroy', 'onUpdate', 'onInteract', 'onEnterTrigger', 'onLeaveTrigger']),
     ),
     permissions: z.array(z.string().min(1)),
     parameters: z.array(scriptParameterSchema),
@@ -113,7 +109,7 @@ export const assetRecordSchema = z
     packageId: packageIdSchema,
     id: localRecordIdSchema,
     globalId: globalRecordIdSchema,
-    kind: z.enum(["mesh", "material", "texture", "audio", "decal", "document", "text"]),
+    kind: z.enum(['mesh', 'material', 'texture', 'audio', 'decal', 'document', 'text']),
     name: z.string().min(1),
     description: z.string().min(1).optional(),
     tags: z.array(z.string().min(1)).default([]),
@@ -226,7 +222,7 @@ export const sceneManifestSchema = z
       z
         .object({
           userId: z.string().min(1),
-          mode: z.enum(["orbit", "walk"]),
+          mode: z.enum(['orbit', 'walk']),
           position: vector3Schema,
           target: vector3Schema,
           zoom: z.number().positive().optional(),
@@ -253,7 +249,7 @@ export const packageManifestSchema = z
     importSource: z
       .object({
         rootPath: relativePathSchema,
-        sourceKind: z.enum(["tts-mod", "tts-save", "manual"]),
+        sourceKind: z.enum(['tts-mod', 'tts-save', 'manual']),
       })
       .strict(),
     assetIds: z.array(localRecordIdSchema).default([]),
@@ -269,20 +265,20 @@ export const importJobSchema = z
     schemaVersion: schemaVersionSchema,
     id: localRecordIdSchema,
     globalId: globalRecordIdSchema,
-    status: z.enum(["queued", "running", "completed", "failed", "cancelled"]),
+    status: z.enum(['queued', 'running', 'completed', 'failed', 'cancelled']),
     createdAt: isoDateTimeSchema,
     startedAt: isoDateTimeSchema.optional(),
     completedAt: isoDateTimeSchema.optional(),
     source: z
       .object({
-        kind: z.enum(["tts-mod", "tts-save", "unity-bundle", "loose-file", "manual"]),
+        kind: z.enum(['tts-mod', 'tts-save', 'unity-bundle', 'loose-file', 'manual']),
         uri: z.string().min(1),
         packageIdHint: packageIdSchema.optional(),
       })
       .strict(),
     progress: z
       .object({
-        currentStage: z.enum(["scan", "extract", "validate", "stylize", "prefab", "index"]),
+        currentStage: z.enum(['scan', 'extract', 'validate', 'stylize', 'prefab', 'index']),
         completedStages: z.number().int().nonnegative(),
         totalStages: z.number().int().positive(),
       })
