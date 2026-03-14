@@ -1,5 +1,7 @@
 # 3D VTT Spec
 
+This document remains the narrative background brief for the project. Canonical planning, decision deltas, and implementation task tracking live under [`openspec/`](../openspec/).
+
 ## 1. Product Summary
 
 Build a web-based 3D virtual tabletop using Three.js that feels as frictionless as Owlbear Rodeo, but in a fully navigable 3D scene. It should import content derived from Tabletop Simulator mod assets, render in a deliberately low-fidelity late-90s style, and expose an in-editor scripting and customization model where nearly every system is modular and editable.

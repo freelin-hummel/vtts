@@ -40,6 +40,7 @@ This repository has a useful corpus of Tabletop Simulator-related assets, but it
 
 ### New Capabilities
 - `asset-import`: Runtime-triggered import flow, normalization jobs, and package indexing for TTS-derived content.
+- `content-schema`: Shared schema contracts for startup import behavior, package identity, scene references, and storage/index metadata.
 - `runtime-rendering`: Retro-styled 3D scene rendering, camera movement, and object interaction.
 - `scene-editor`: Minimal editor UX for assembling and editing scenes in-browser.
 - `scripting-runtime`: Sandboxed in-editor scripting and attachable behavior modules.

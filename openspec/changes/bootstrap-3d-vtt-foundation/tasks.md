@@ -1,8 +1,8 @@
 ## 1. OpenSpec Baseline
 
-- [ ] 1.1 Keep `docs/3d-vtt-spec.md` as narrative background and treat OpenSpec as the canonical planning layer
+- [x] 1.1 Keep `docs/3d-vtt-spec.md` as narrative background and treat OpenSpec as the canonical planning layer
 - [ ] 1.2 Review and refine the `bootstrap-3d-vtt-foundation` change after the first code scaffold is in place
-- [ ] 1.3 Encode the defined startup import, ID, scene-reference, and storage contracts into shared schemas before service code branches
+- [x] 1.3 Encode the defined startup import, ID, scene-reference, and storage contracts into shared schemas before service code branches
 
 ## 2. Repository Scaffolding
 
