@@ -1,6 +1,5 @@
 {
-  "name": "@vtts/backend",
-  "private": true,
+  "name": "@vtts/api-client",
   "version": "0.1.0",
   "type": "module",
   "main": "./dist/index.js",
@@ -13,10 +12,9 @@
   },
   "scripts": {
     "build": "tsc -p tsconfig.json",
-    "dev": "node --watch dist/index.js",
     "test": "vitest run"
   },
   "dependencies": {
-    "@vtts/content-schema": "workspace:*"
+    "@vtts/shared": "workspace:*"
   }
 }

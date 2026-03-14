@@ -2,6 +2,8 @@
   "files": [],
   "references": [
     { "path": "./packages/content-schema" },
+    { "path": "./packages/shared" },
+    { "path": "./packages/api-client" },
     { "path": "./apps/backend" }
   ]
 }

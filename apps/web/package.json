@@ -1,0 +1,25 @@
+{
+  "name": "@vtts/web",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "build": "vite build",
+    "dev": "vite",
+    "preview": "vite preview",
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@vtts/api-client": "workspace:*",
+    "@vtts/shared": "workspace:*",
+    "react": "19.2.4",
+    "react-dom": "19.2.4"
+  },
+  "devDependencies": {
+    "@types/react": "19.1.8",
+    "@types/react-dom": "19.1.6",
+    "@vitejs/plugin-react": "6.0.1",
+    "vite": "8.0.0"
+  }
+}

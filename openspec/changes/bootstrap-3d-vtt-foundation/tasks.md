@@ -6,10 +6,17 @@
 
 ## 2. Repository Scaffolding
 
-- [ ] 2.1 Expand the monorepo beyond `apps/backend` with `apps/web` and additional core `packages/*` as the next slices land
+- [x] 2.1 Expand the monorepo beyond `apps/backend` with `apps/web` and additional core `packages/*` as the next slices land
+  - Added `apps/web` (React + Vite + TypeScript) with proxy to backend API
+  - Added `packages/shared` (shared branded ID types, Result util, re-exports from content-schema)
+  - Added `packages/api-client` (typed route constants, re-exports from shared)
 - [x] 2.2 Set up TypeScript project references or workspace-level package management
 - [ ] 2.3 Add baseline linting, formatting, and build scripts
 - [x] 2.4 Set up the repo for `pnpm` workspaces and a single-service backend entrypoint with internal module boundaries
+  - `pnpm-workspace.yaml` covers `apps/*` and `packages/*`
+  - Root `package.json` has workspace-level `build`, `dev`, `test`, `typecheck` scripts
+  - Backend uses `src/index.ts` as the single-service entrypoint and imports shared code via `@vtts/content-schema` workspace package
+  - `apps/web` imports through `@vtts/api-client` workspace package (no cross-package relative imports)
 
 ## 3. Content Schema and Backend Import Path
 
