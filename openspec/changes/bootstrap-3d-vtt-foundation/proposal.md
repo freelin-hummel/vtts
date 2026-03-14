@@ -53,4 +53,5 @@ None.
 
 - [docs/3d-vtt-spec.md](docs/3d-vtt-spec.md): remains as the narrative brief and background context
 - OpenSpec structure under `openspec/`: becomes the canonical planning layer for ongoing work
-- Future code layout: expected to adopt a monorepo split between web app, backend import/session services, engine, schema, and scripting packages
+- Repository scaffold: now uses a `pnpm` workspace with `apps/backend` and `packages/content-schema` as the first implementation slice
+- Future code layout: expected to expand incrementally from that scaffold into a broader monorepo split between the web app, backend subdomains, engine, schema, storage, and scripting packages
