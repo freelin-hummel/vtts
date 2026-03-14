@@ -1,5 +1,5 @@
 export const apiModule = {
-  importsEndpoint: "/imports",
+  importJobsEndpoint: "/api/import-jobs",
   packagesEndpoint: "/packages",
   assetsEndpoint: "/assets",
   scenesEndpoint: "/scenes",
