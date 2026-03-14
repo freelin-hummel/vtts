@@ -8,7 +8,12 @@
 
 - [ ] 2.1 Expand the monorepo beyond `apps/backend` with `apps/web` and additional core `packages/*` as the next slices land
 - [x] 2.2 Set up TypeScript project references or workspace-level package management
-- [ ] 2.3 Add baseline linting, formatting, and build scripts
+- [x] 2.3 Add baseline linting, formatting, and build scripts
+  - ESLint 10 with `typescript-eslint` flat config (`eslint.config.js`)
+  - Prettier 3 with `.prettierrc` and `.prettierignore`
+  - `.editorconfig` for editor consistency
+  - Root scripts: `lint` (`eslint .`), `format` (`prettier --write .`), `format:check` (`prettier --check .`)
+  - Per-package `lint` and `typecheck` scripts in `apps/backend` and `packages/content-schema`
 - [x] 2.4 Set up the repo for `pnpm` workspaces and a single-service backend entrypoint with internal module boundaries
 
 ## 3. Content Schema and Backend Import Path

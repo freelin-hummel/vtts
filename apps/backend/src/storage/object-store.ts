@@ -1,5 +1,5 @@
-import { mkdir, readFile, readdir, stat, writeFile } from "node:fs/promises";
-import path from "node:path";
+import { mkdir, readFile, readdir, stat, writeFile } from 'node:fs/promises';
+import path from 'node:path';
 
 export interface StorageObjectWriteResult {
   path: string;
@@ -16,16 +16,16 @@ export interface ObjectStore {
 
 const normalizeStoragePath = (value: string): string => {
   if (value.length === 0) {
-    throw new Error("Storage paths must not be empty");
+    throw new Error('Storage paths must not be empty');
   }
 
-  const normalized = path.posix.normalize(value.replaceAll("\\", "/"));
+  const normalized = path.posix.normalize(value.replaceAll('\\', '/'));
 
   if (
-    normalized === "." ||
-    normalized.startsWith("/") ||
-    normalized.startsWith("../") ||
-    normalized.includes("/../")
+    normalized === '.' ||
+    normalized.startsWith('/') ||
+    normalized.startsWith('../') ||
+    normalized.includes('/../')
   ) {
     throw new Error(`Storage paths must stay relative to the object-store root: ${value}`);
   }
@@ -59,7 +59,7 @@ const walkDirectory = async (directoryPath: string, rootDir: string): Promise<st
         return walkDirectory(entryPath, rootDir);
       }
 
-      return path.relative(rootDir, entryPath).replaceAll(path.sep, "/");
+      return path.relative(rootDir, entryPath).replaceAll(path.sep, '/');
     }),
   );
 
@@ -73,7 +73,10 @@ export class LocalDiskObjectStore implements ObjectStore {
     this.rootDir = path.resolve(rootDir);
   }
 
-  async writeObject(storagePath: string, data: Uint8Array | string): Promise<StorageObjectWriteResult> {
+  async writeObject(
+    storagePath: string,
+    data: Uint8Array | string,
+  ): Promise<StorageObjectWriteResult> {
     const { absolutePath, normalizedPath } = resolveStoragePath(this.rootDir, storagePath);
 
     await mkdir(path.dirname(absolutePath), { recursive: true });
@@ -81,7 +84,7 @@ export class LocalDiskObjectStore implements ObjectStore {
 
     return {
       path: normalizedPath,
-      byteLength: typeof data === "string" ? Buffer.byteLength(data) : data.byteLength,
+      byteLength: typeof data === 'string' ? Buffer.byteLength(data) : data.byteLength,
     };
   }
 
@@ -96,7 +99,7 @@ export class LocalDiskObjectStore implements ObjectStore {
     try {
       return (await stat(absolutePath)).isFile();
     } catch (error) {
-      if ((error as NodeJS.ErrnoException).code === "ENOENT") {
+      if ((error as NodeJS.ErrnoException).code === 'ENOENT') {
         return false;
       }
 
@@ -104,12 +107,12 @@ export class LocalDiskObjectStore implements ObjectStore {
     }
   }
 
-  async listObjects(prefix = ""): Promise<string[]> {
+  async listObjects(prefix = ''): Promise<string[]> {
     if (prefix.length === 0) {
       try {
         return walkDirectory(this.rootDir, this.rootDir);
       } catch (error) {
-        if ((error as NodeJS.ErrnoException).code === "ENOENT") {
+        if ((error as NodeJS.ErrnoException).code === 'ENOENT') {
           return [];
         }
 
@@ -128,7 +131,7 @@ export class LocalDiskObjectStore implements ObjectStore {
 
       return [normalizedPath];
     } catch (error) {
-      if ((error as NodeJS.ErrnoException).code === "ENOENT") {
+      if ((error as NodeJS.ErrnoException).code === 'ENOENT') {
         return [];
       }
 

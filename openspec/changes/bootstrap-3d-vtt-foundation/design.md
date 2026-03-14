@@ -90,6 +90,7 @@ The goal is a stable normalized content path, not full fidelity to every source 
 ## Goals / Non-Goals
 
 **Goals**
+
 - Establish a concrete starter stack for a Three.js-based 3D VTT.
 - Keep engine/runtime concerns decoupled from React UI concerns.
 - Define package boundaries that support modular content and tooling.
@@ -97,6 +98,7 @@ The goal is a stable normalized content path, not full fidelity to every source 
 - Choose an editor and scripting path that is realistic for MVP.
 
 **Non-Goals**
+
 - Finalize every backend technology before the frontend foundation exists.
 - Build a generalized game engine.
 - Support raw `.unity3d` bundle parsing directly in the browser render path.
@@ -209,98 +211,98 @@ content/packages/<package-name>/
   thumbnails/
 ```
 
-  ### Decision: Use a hybrid backend interface instead of a single transport style
+### Decision: Use a hybrid backend interface instead of a single transport style
 
-  This system has three different workloads and they should not be forced through one interface model.
+This system has three different workloads and they should not be forced through one interface model.
 
-  - HTTP is the right default for import creation, package browsing, asset metadata lookup, scene save/load, and account or permission management.
-  - WebSocket is the right default for live room presence, token movement, transform updates, pings, and transient play-mode events.
-  - Background job workers are the right execution model for asset extraction, normalization, and thumbnail generation.
+- HTTP is the right default for import creation, package browsing, asset metadata lookup, scene save/load, and account or permission management.
+- WebSocket is the right default for live room presence, token movement, transform updates, pings, and transient play-mode events.
+- Background job workers are the right execution model for asset extraction, normalization, and thumbnail generation.
 
-  This keeps the system debuggable and simple where it should be simple, while still giving the tabletop the low-latency behavior it needs.
+This keeps the system debuggable and simple where it should be simple, while still giving the tabletop the low-latency behavior it needs.
 
-  ### Decision: Build the import backend before the viewer-facing frontend
+### Decision: Build the import backend before the viewer-facing frontend
 
-  The frontend cannot meaningfully validate rendering, asset browsing, or scene assembly until the system can ingest and serve normalized content. Because of that, the first backend slice should focus on import, storage, indexing, and asset delivery rather than on full auth or multiplayer concerns.
+The frontend cannot meaningfully validate rendering, asset browsing, or scene assembly until the system can ingest and serve normalized content. Because of that, the first backend slice should focus on import, storage, indexing, and asset delivery rather than on full auth or multiplayer concerns.
 
-  The first backend slice should provide:
+The first backend slice should provide:
 
-  1. An import entrypoint that can be triggered while the app is running.
-  2. An import job runner that writes normalized package output.
-  3. A metadata index that lets the frontend query available packages and assets.
-  4. Stable asset delivery paths for normalized content.
-  5. Scene persistence for saved scene data once content exists.
+1. An import entrypoint that can be triggered while the app is running.
+2. An import job runner that writes normalized package output.
+3. A metadata index that lets the frontend query available packages and assets.
+4. Stable asset delivery paths for normalized content.
+5. Scene persistence for saved scene data once content exists.
 
-  ### Backend request and event model
+### Backend request and event model
 
-  The backend should be shaped around explicit boundaries:
+The backend should be shaped around explicit boundaries:
 
-  ```text
-  Browser / Editor
-    │
-    ├── HTTP API
-    │   - create import jobs
-    │   - list packages and assets
-    │   - fetch and save scenes
-    │   - inspect import status and warnings
-    │
-    ├── WebSocket gateway
-    │   - join live session
-    │   - presence updates
-    │   - object transform sync
-    │   - interaction and script events
-    │
-    └── Asset delivery
-       - glb/gltf
-       - textures
-       - audio
-       - thumbnails
+```text
+Browser / Editor
+  │
+  ├── HTTP API
+  │   - create import jobs
+  │   - list packages and assets
+  │   - fetch and save scenes
+  │   - inspect import status and warnings
+  │
+  ├── WebSocket gateway
+  │   - join live session
+  │   - presence updates
+  │   - object transform sync
+  │   - interaction and script events
+  │
+  └── Asset delivery
+     - glb/gltf
+     - textures
+     - audio
+     - thumbnails
 
-  Backend
-    │
-    ├── API service
-    ├── realtime session service
-    ├── import worker
-    ├── metadata DB
-    └── package storage
-  ```
+Backend
+  │
+  ├── API service
+  ├── realtime session service
+  ├── import worker
+  ├── metadata DB
+  └── package storage
+```
 
-  ### Initial backend API shape
+### Initial backend API shape
 
-  The MVP backend does not need a broad surface area. It needs a tight set of content-first endpoints and events.
+The MVP backend does not need a broad surface area. It needs a tight set of content-first endpoints and events.
 
-  HTTP endpoints:
+HTTP endpoints:
 
-  - `POST /imports` creates an import job from a selected source bundle, file set, or uploaded archive.
-  - `GET /imports/:id` returns job status, warnings, progress, and output package IDs.
-  - `GET /packages` lists imported packages and summary metadata.
-  - `GET /packages/:id` returns package manifests, asset summaries, and provenance.
-  - `GET /assets/:id` returns asset metadata and the stable delivery path.
-  - `GET /scenes/:id` returns a saved scene manifest.
-  - `PUT /scenes/:id` persists scene state and prefab overrides.
+- `POST /imports` creates an import job from a selected source bundle, file set, or uploaded archive.
+- `GET /imports/:id` returns job status, warnings, progress, and output package IDs.
+- `GET /packages` lists imported packages and summary metadata.
+- `GET /packages/:id` returns package manifests, asset summaries, and provenance.
+- `GET /assets/:id` returns asset metadata and the stable delivery path.
+- `GET /scenes/:id` returns a saved scene manifest.
+- `PUT /scenes/:id` persists scene state and prefab overrides.
 
-  WebSocket event categories:
+WebSocket event categories:
 
-  - session join and leave
-  - presence updates
-  - entity transform updates
-  - visibility and selection broadcasts where needed
-  - script-generated scene events
-  - GM control events
+- session join and leave
+- presence updates
+- entity transform updates
+- visibility and selection broadcasts where needed
+- script-generated scene events
+- GM control events
 
-  ### Initial data contracts to define first
+### Initial data contracts to define first
 
-  Before any meaningful code lands, the following schemas must be written and treated as the contract boundary:
+Before any meaningful code lands, the following schemas must be written and treated as the contract boundary:
 
-  - package manifest
-  - asset record
-  - prefab record
-  - scene manifest
-  - script metadata and script attachment record
-  - import job record
-  - import warning and provenance record
+- package manifest
+- asset record
+- prefab record
+- scene manifest
+- script metadata and script attachment record
+- import job record
+- import warning and provenance record
 
-  These schemas should live in `packages/content-schema` and be reused by API handlers, import workers, storage, and the frontend.
+These schemas should live in `packages/content-schema` and be reused by API handlers, import workers, storage, and the frontend.
 
 ### Decision: Prefer a component registry over a full ECS framework initially
 
