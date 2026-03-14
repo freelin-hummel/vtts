@@ -1,0 +1,26 @@
+{
+  "name": "vtts",
+  "private": true,
+  "version": "0.1.0",
+  "description": "OpenSpec change set: [openspec/changes/bootstrap-3d-vtt-foundation/proposal.md](openspec/changes/bootstrap-3d-vtt-foundation/proposal.md)",
+  "packageManager": "pnpm@10.6.5",
+  "type": "module",
+  "scripts": {
+    "build": "corepack pnpm -r build",
+    "test": "corepack pnpm -r test",
+    "typecheck": "tsc -b"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/freelin-hummel/vtts.git"
+  },
+  "bugs": {
+    "url": "https://github.com/freelin-hummel/vtts/issues"
+  },
+  "homepage": "https://github.com/freelin-hummel/vtts#readme",
+  "devDependencies": {
+    "@types/node": "25.5.0",
+    "typescript": "5.9.3",
+    "vitest": "4.1.0"
+  }
+}

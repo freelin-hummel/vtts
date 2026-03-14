@@ -7,14 +7,14 @@
 ## 2. Repository Scaffolding
 
 - [ ] 2.1 Create monorepo folders for backend apps, `apps/web`, and core `packages/*`
-- [ ] 2.2 Set up TypeScript project references or workspace-level package management
+- [x] 2.2 Set up TypeScript project references or workspace-level package management
 - [ ] 2.3 Add baseline linting, formatting, and build scripts
-- [ ] 2.4 Set up the repo for `pnpm` workspaces and a single-service backend entrypoint with internal module boundaries
+- [x] 2.4 Set up the repo for `pnpm` workspaces and a single-service backend entrypoint with internal module boundaries
 
 ## 3. Content Schema and Backend Import Path
 
-- [ ] 3.1 Define Zod schemas for asset, prefab, scene, script, and import job manifests
-- [ ] 3.2 Define stable package-scoped IDs, generated global IDs, and prefab-plus-override scene references in the schemas
+- [x] 3.1 Define Zod schemas for asset, prefab, scene, script, and import job manifests
+- [x] 3.2 Define stable package-scoped IDs, generated global IDs, and prefab-plus-override scene references in the schemas
 - [ ] 3.3 Implement package storage and metadata index abstractions for normalized content
 - [ ] 3.4 Implement a local-disk object-store backend behind the storage abstraction
 - [ ] 3.5 Implement an HTTP import entrypoint that creates import jobs from a running app flow
