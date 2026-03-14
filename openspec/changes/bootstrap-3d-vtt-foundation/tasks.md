@@ -1,12 +1,12 @@
 ## 1. OpenSpec Baseline
 
 - [x] 1.1 Keep `docs/3d-vtt-spec.md` as narrative background and treat OpenSpec as the canonical planning layer
-- [ ] 1.2 Review and refine the `bootstrap-3d-vtt-foundation` change after the first code scaffold is in place
+- [x] 1.2 Review and refine the `bootstrap-3d-vtt-foundation` change after the first code scaffold is in place
 - [x] 1.3 Encode the defined startup import, ID, scene-reference, and storage contracts into shared schemas before service code branches
 
 ## 2. Repository Scaffolding
 
-- [ ] 2.1 Create monorepo folders for backend apps, `apps/web`, and core `packages/*`
+- [ ] 2.1 Expand the monorepo beyond `apps/backend` with `apps/web` and additional core `packages/*` as the next slices land
 - [x] 2.2 Set up TypeScript project references or workspace-level package management
 - [ ] 2.3 Add baseline linting, formatting, and build scripts
 - [x] 2.4 Set up the repo for `pnpm` workspaces and a single-service backend entrypoint with internal module boundaries

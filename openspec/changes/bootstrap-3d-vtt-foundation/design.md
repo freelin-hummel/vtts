@@ -8,6 +8,17 @@ The repo is greenfield apart from the imported asset corpus in `Mods/` and a nar
 
 The following choices are defined before implementation starts so the backend, importer, and frontend share stable contracts.
 
+## First Scaffold Review
+
+The first implementation slice is now in place and should shape the next planning steps.
+
+- The repository now uses a root `pnpm` workspace with TypeScript project references.
+- `apps/backend` is the current single-service backend entrypoint, with internal `api`, `imports`, and `storage` module boundaries rather than separate deployable services.
+- `packages/content-schema` is the first shared package and already carries the startup import, identity, scene reference, and storage metadata contracts.
+- `apps/web` and the other suggested packages remain planned follow-on scaffolding, not current repository facts.
+
+This means the change should treat the current scaffold as the baseline and describe additional apps or packages as incremental follow-up work rather than assuming they all exist already.
+
 ### First import source and startup behavior
 
 - The first importer will read the existing `Mods/` corpus directly when the backend server starts.
@@ -307,21 +318,18 @@ This keeps customizability high without making imported packages equivalent to a
 
 ```text
 apps/
+  backend/
   web/
-  importer/
-  api/
-  session-gateway/
-  import-worker/
 packages/
   content-schema/
-  asset-index/
   engine/
-  import-core/
-  import-tts/
   render-presets/
   scripting-api/
   storage/
   ui/
+  asset-index/
+  import-core/
+  import-tts/
 content/
   packages/
 docs/
@@ -329,10 +337,12 @@ openspec/
 Mods/
 ```
 
+The current scaffold only includes `apps/backend` and `packages/content-schema`. The remaining entries above are still the intended near-term expansion path for later tasks.
+
 ## First Build Slice
 
 1. Define the manifest schemas for assets, prefabs, scenes, scripts, and import job records.
-2. Build the import backend path: API entrypoint, worker, package storage, and metadata index.
+2. Build out the import backend path from `apps/backend`: API entrypoint, in-process worker stages, package storage, and metadata index.
 3. Normalize one narrow class of TTS-derived source assets into the manifest format and serve the results back through stable asset paths.
 4. Scaffold `apps/web` with React, Vite, TypeScript, Three.js, and R3F.
 5. Build a viewport that can render one imported test asset, orbit the camera, and select objects.
