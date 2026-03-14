@@ -8,6 +8,9 @@ import { apiModule } from "./api/index.js";
 import { importPipelineStages } from "./imports/index.js";
 import { storageModule } from "./storage/index.js";
 
+export { createImportJobRequestSchema, ImportJobStore } from "./import-jobs/store.js";
+export type { CreateImportJobRequest } from "./import-jobs/store.js";
+
 export const backendContracts = {
   importJob: importJobSchema,
   packageManifest: packageManifestSchema,

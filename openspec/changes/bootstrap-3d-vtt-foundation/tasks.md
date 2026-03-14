@@ -17,7 +17,7 @@
 - [x] 3.2 Define stable package-scoped IDs, generated global IDs, and prefab-plus-override scene references in the schemas
 - [x] 3.3 Implement package storage and metadata index abstractions for normalized content
 - [x] 3.4 Implement a local-disk object-store backend behind the storage abstraction
-- [ ] 3.5 Implement an HTTP import entrypoint that creates import jobs from a running app flow
+- [x] 3.5 Implement an HTTP import entrypoint that creates import jobs from a running app flow
 - [ ] 3.6 Implement startup import of the existing `Mods/` corpus and reindex newly discovered assets
 - [ ] 3.7 Implement watched-folder auto-reimport for configured mod sources
 - [ ] 3.8 Implement a first worker path that normalizes a narrow TTS-derived sample into package output
