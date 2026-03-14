@@ -15,8 +15,8 @@
 
 - [x] 3.1 Define Zod schemas for asset, prefab, scene, script, and import job manifests
 - [x] 3.2 Define stable package-scoped IDs, generated global IDs, and prefab-plus-override scene references in the schemas
-- [ ] 3.3 Implement package storage and metadata index abstractions for normalized content
-- [ ] 3.4 Implement a local-disk object-store backend behind the storage abstraction
+- [x] 3.3 Implement package storage and metadata index abstractions for normalized content
+- [x] 3.4 Implement a local-disk object-store backend behind the storage abstraction
 - [ ] 3.5 Implement an HTTP import entrypoint that creates import jobs from a running app flow
 - [ ] 3.6 Implement startup import of the existing `Mods/` corpus and reindex newly discovered assets
 - [ ] 3.7 Implement watched-folder auto-reimport for configured mod sources
